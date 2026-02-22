@@ -14,4 +14,10 @@ rm -f proto/acme.pb.go
 rm -f proto/acme_grpc.pb.go
 echo "✅ Removed generated protobuf files"
 
+echo "🧹 Cleaning Go build cache..."
+go clean -testcache
+go clean -cache
+go clean -modcache
+echo "✅ Cleaned Go build cache"
+
 echo "✨ Clean complete"

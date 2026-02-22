@@ -13,7 +13,7 @@ help:
 	@echo ""
 	@echo "  🛠️  UTILIDADES:"
 	@echo "  make proto            		- Generate protobuf code"
-	@echo "  make purge            		- Remove artifacts and stop PostgreSQL"
+	@echo "  make destroy          		- Remove artifacts and stop PostgreSQL"
 	@echo ""
 	@echo "  ☸️  KUBERNETES (deployment/):"
 	@echo "  make deploy-tag <version>  - Create and push git tag (e.g., 1.2.3)"
@@ -29,8 +29,8 @@ start:
 stop:
 	bash bin/app/stop.sh
 
-purge:
-	bash bin/app/purge.sh
+destroy:
+	bash bin/app/destroy.sh
 
 deploy-tag:
 	bash bin/app/deploy-tag.sh $(filter-out $@,$(MAKECMDGOALS))
@@ -39,7 +39,7 @@ delete-tag:
 	bash bin/app/delete-tag.sh $(filter-out $@,$(MAKECMDGOALS))
 
 test:
-	go test ./... $(filter-out $@,$(MAKECMDGOALS))
+	go test -count=1 -cover ./... $(filter-out $@,$(MAKECMDGOALS))
 
 build:
 	go build ./... $(filter-out $@,$(MAKECMDGOALS))

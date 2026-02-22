@@ -1,4 +1,4 @@
-package domainacmes
+package domaingoldens
 
 import (
 	"crypto/rand"

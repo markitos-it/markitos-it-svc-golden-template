@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: markitos-it-svc-acmes-deployment
+  name: markitos-it-svc-goldens-deployment
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: markitos-it-svc-acmes-pods
+      app: markitos-it-svc-goldens-pods
   template:
     metadata:
       labels:
-        app: markitos-it-svc-acmes-pods
+        app: markitos-it-svc-goldens-pods
     spec:
       imagePullSecrets:
       - name: gcp-artifact-registry-secret
       containers:
-      - name: markitos-it-svc-acmes-container
-        image: europe-southwest1-docker.pkg.dev/markitos-it-golden-images/private/markitos-it-svc-acmes:1.0.0
+      - name: markitos-it-svc-goldens-container
+        image: europe-southwest1-docker.pkg.dev/markitos-it-golden-images/private/markitos-it-svc-goldens:1.0.0
         ports:
         - containerPort: 3000
           name: grpc
@@ -25,22 +25,22 @@ spec:
         - name: GRPC_PORT
           valueFrom:
             configMapKeyRef:
-              name: acmes-config
+              name: goldens-config
               key: GRPC_PORT
         - name: DB_HOST
           valueFrom:
             configMapKeyRef:
-              name: acmes-config
+              name: goldens-config
               key: DB_HOST
         - name: DB_PORT
           valueFrom:
             configMapKeyRef:
-              name: acmes-config
+              name: goldens-config
               key: DB_PORT
         - name: DB_USER
           valueFrom:
             configMapKeyRef:
-              name: acmes-config
+              name: goldens-config
               key: DB_USER
         - name: DB_PASS
           valueFrom:
@@ -50,7 +50,7 @@ spec:
         - name: DB_NAME
           valueFrom:
             configMapKeyRef:
-              name: acmes-config
+              name: goldens-config
               key: DB_NAME
         readinessProbe:
           tcpSocket:
@@ -73,12 +73,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: markitos-it-svc-acmes-service
+  name: markitos-it-svc-goldens-service
   namespace: default
 spec:
   type: ClusterIP
   selector:
-    app: markitos-it-svc-acmes-pods
+    app: markitos-it-svc-goldens-pods
   ports:
   - port: 3000
     targetPort: 3000
@@ -88,7 +88,7 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: markitos-it-svc-acmes-hpa
+  name: markitos-it-svc-goldens-hpa
   namespace: default
 spec:
   minReplicas: 1
@@ -96,7 +96,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: markitos-it-svc-acmes-deployment
+    name: markitos-it-svc-goldens-deployment
   metrics:
   - type: Resource
     resource:
@@ -114,12 +114,12 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: acmes-config
+  name: goldens-config
   namespace: default
 data:
   GRPC_PORT: "3000"
   DB_HOST: "postgres"
   DB_PORT: "5432"
-  DB_USER: "markitos-it-svc-acmes"
-  DB_PASS: "markitos-it-svc-acmes"
-  DB_NAME: "markitos-it-svc-acmes"
+  DB_USER: "markitos-it-svc-goldens"
+  DB_PASS: "markitos-it-svc-goldens"
+  DB_NAME: "markitos-it-svc-goldens"

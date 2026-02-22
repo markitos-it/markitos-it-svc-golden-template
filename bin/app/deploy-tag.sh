@@ -3,7 +3,7 @@ set -e
 
 if [ -z "$1" ]; then
     echo "❌ Error: Version is required"
-    echo "Usage: make app-deploy-tag 1.2.3"
+    echo "Usage: make deploy-tag 1.2.3"
     exit 1
 fi
 

@@ -1,10 +1,10 @@
-package domainacmes
+package domaingoldens
 
 import (
 	"time"
 )
 
-type Acme struct {
+type Golden struct {
 	ID          string
 	Title       string
 	Description string

@@ -1,38 +1,38 @@
 services:
-  markitos-it-svc-acmes-postgres:
+  markitos-it-svc-goldens-postgres:
     image: postgres:17-alpine
-    container_name: markitos-it-svc-acmes-postgres
+    container_name: markitos-it-svc-goldens-postgres
     command: ["postgres", "-p", "${POSTGRES_PORT:-55432}"]
     environment:
-      POSTGRES_USER: markitos-it-svc-acmes
-      POSTGRES_PASSWORD: markitos-it-svc-acmes
-      POSTGRES_DB: markitos-it-svc-acmes
+      POSTGRES_USER: markitos-it-svc-goldens
+      POSTGRES_PASSWORD: markitos-it-svc-goldens
+      POSTGRES_DB: markitos-it-svc-goldens
     ports:
       - "${POSTGRES_PORT:-55432}:${POSTGRES_PORT:-55432}"
     volumes:
-      - markitos-it-svc-acmes-postgres_data:/var/lib/postgresql/data
+      - markitos-it-svc-goldens-postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U markitos-it-svc-acmes -d markitos-it-svc-acmes -p ${POSTGRES_PORT:-55432}"]
+      test: ["CMD-SHELL", "pg_isready -U markitos-it-svc-goldens -d markitos-it-svc-goldens -p ${POSTGRES_PORT:-55432}"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  markitos-it-svc-acmes:
+  markitos-it-svc-goldens:
     build: .
-    container_name: markitos-it-svc-acmes
+    container_name: markitos-it-svc-goldens
     environment:
       GRPC_PORT: "3000"
-      DB_HOST: markitos-it-svc-acmes-postgres
+      DB_HOST: markitos-it-svc-goldens-postgres
       DB_PORT: "${POSTGRES_PORT:-55432}"
-      DB_USER: markitos-it-svc-acmes
-      DB_PASS: markitos-it-svc-acmes
-      DB_NAME: markitos-it-svc-acmes
+      DB_USER: markitos-it-svc-goldens
+      DB_PASS: markitos-it-svc-goldens
+      DB_NAME: markitos-it-svc-goldens
     ports:
       - "3000:3000"
     depends_on:
-      markitos-it-svc-acmes-postgres:
+      markitos-it-svc-goldens-postgres:
         condition: service_healthy
 
 volumes:
-  markitos-it-svc-acmes-postgres_data:
+  markitos-it-svc-goldens-postgres_data:
     driver: local

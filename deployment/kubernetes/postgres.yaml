@@ -5,8 +5,8 @@ metadata:
   name: postgres-config
   namespace: default
 data:
-  POSTGRES_DB: markitos-it-svc-acmes
-  POSTGRES_USER: markitos-it-svc-acmes
+  POSTGRES_DB: markitos-it-svc-goldens
+  POSTGRES_USER: markitos-it-svc-goldens
 
 ---
 apiVersion: v1
@@ -73,7 +73,7 @@ spec:
             command:
             - sh
             - -c
-            - pg_isready -U markitos-it-svc-acmes -d markitos-it-svc-acmes
+            - pg_isready -U markitos-it-svc-goldens -d markitos-it-svc-goldens
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
@@ -81,7 +81,7 @@ spec:
             command:
             - sh
             - -c
-            - pg_isready -U markitos-it-svc-acmes -d markitos-it-svc-acmes
+            - pg_isready -U markitos-it-svc-goldens -d markitos-it-svc-goldens
           initialDelaySeconds: 5
           periodSeconds: 5
       volumes:

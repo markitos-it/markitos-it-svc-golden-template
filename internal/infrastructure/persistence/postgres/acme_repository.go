@@ -4,24 +4,23 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	domaingoldens "markitos-it-svc-goldens/internal/domain/domainacmes"
 	"time"
-
-	"markitos-it-svc-acmes/internal/domain/domainacmes"
 
 	"github.com/lib/pq"
 )
 
-type AcmeRepository struct {
+type GoldenRepository struct {
 	db *sql.DB
 }
 
-func NewAcmeRepository(db *sql.DB) *AcmeRepository {
-	return &AcmeRepository{db: db}
+func NewGoldenRepository(db *sql.DB) *GoldenRepository {
+	return &GoldenRepository{db: db}
 }
 
-func (r *AcmeRepository) InitSchema(ctx context.Context) error {
+func (r *GoldenRepository) InitSchema(ctx context.Context) error {
 	schema := `
-	CREATE TABLE IF NOT EXISTS acmes (
+	CREATE TABLE IF NOT EXISTS goldens (
 		id VARCHAR(255) PRIMARY KEY,
 		title VARCHAR(500) NOT NULL,
 		description TEXT,
@@ -32,8 +31,8 @@ func (r *AcmeRepository) InitSchema(ctx context.Context) error {
 		cover_image VARCHAR(1000) NOT NULL
 	);
 
-	CREATE INDEX IF NOT EXISTS idx_acmes_category ON acmes(category);
-	CREATE INDEX IF NOT EXISTS idx_acmes_updated_at ON acmes(updated_at DESC);
+	CREATE INDEX IF NOT EXISTS idx_goldens_category ON goldens(category);
+	CREATE INDEX IF NOT EXISTS idx_goldens_updated_at ON goldens(updated_at DESC);
 	`
 
 	_, err := r.db.ExecContext(ctx, schema)
@@ -44,9 +43,9 @@ func (r *AcmeRepository) InitSchema(ctx context.Context) error {
 	return nil
 }
 
-func (r *AcmeRepository) SeedData(ctx context.Context) error {
+func (r *GoldenRepository) SeedData(ctx context.Context) error {
 	var count int
-	err := r.db.QueryRowContext(ctx, "SELECT COUNT(*) FROM acmes").Scan(&count)
+	err := r.db.QueryRowContext(ctx, "SELECT COUNT(*) FROM goldens").Scan(&count)
 	if err != nil {
 		return fmt.Errorf("failed to check existing data: %w", err)
 	}
@@ -55,7 +54,7 @@ func (r *AcmeRepository) SeedData(ctx context.Context) error {
 		return nil
 	}
 
-	docs := []domainacmes.Acme{
+	docs := []domaingoldens.Golden{
 		{
 			ID:          "getting-started-keptn",
 			Title:       "Getting Started with Keptn",
@@ -81,29 +80,29 @@ func (r *AcmeRepository) SeedData(ctx context.Context) error {
 	for _, doc := range docs {
 		err := r.Create(ctx, &doc)
 		if err != nil {
-			return fmt.Errorf("failed to seed acme %s: %w", doc.ID, err)
+			return fmt.Errorf("failed to seed golden %s: %w", doc.ID, err)
 		}
 	}
 
 	return nil
 }
 
-func (r *AcmeRepository) GetAll(ctx context.Context) ([]domainacmes.Acme, error) {
+func (r *GoldenRepository) GetAll(ctx context.Context) ([]domaingoldens.Golden, error) {
 	query := `
 		SELECT id, title, description, category, tags, updated_at, content_b64, cover_image
-		FROM acmes
+		FROM goldens
 		ORDER BY updated_at DESC
 	`
 
 	rows, err := r.db.QueryContext(ctx, query)
 	if err != nil {
-		return nil, fmt.Errorf("failed to query acmes: %w", err)
+		return nil, fmt.Errorf("failed to query goldens: %w", err)
 	}
 	defer rows.Close()
 
-	var docs []domainacmes.Acme
+	var docs []domaingoldens.Golden
 	for rows.Next() {
-		var doc domainacmes.Acme
+		var doc domaingoldens.Golden
 		var tags pq.StringArray
 
 		err := rows.Scan(
@@ -117,7 +116,7 @@ func (r *AcmeRepository) GetAll(ctx context.Context) ([]domainacmes.Acme, error)
 			&doc.CoverImage,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("failed to scan acme: %w", err)
+			return nil, fmt.Errorf("failed to scan golden: %w", err)
 		}
 
 		doc.Tags = []string(tags)
@@ -125,20 +124,20 @@ func (r *AcmeRepository) GetAll(ctx context.Context) ([]domainacmes.Acme, error)
 	}
 
 	if err = rows.Err(); err != nil {
-		return nil, fmt.Errorf("error iterating acmes: %w", err)
+		return nil, fmt.Errorf("error iterating goldens: %w", err)
 	}
 
 	return docs, nil
 }
 
-func (r *AcmeRepository) GetByID(ctx context.Context, id string) (*domainacmes.Acme, error) {
+func (r *GoldenRepository) GetByID(ctx context.Context, id string) (*domaingoldens.Golden, error) {
 	query := `
 		SELECT id, title, description, category, tags, updated_at, content_b64, cover_image
-		FROM acmes
+		FROM goldens
 		WHERE id = $1
 	`
 
-	var doc domainacmes.Acme
+	var doc domaingoldens.Golden
 	var tags pq.StringArray
 
 	err := r.db.QueryRowContext(ctx, query, id).Scan(
@@ -153,19 +152,19 @@ func (r *AcmeRepository) GetByID(ctx context.Context, id string) (*domainacmes.A
 	)
 
 	if err == sql.ErrNoRows {
-		return nil, fmt.Errorf("acme not found: %s", id)
+		return nil, fmt.Errorf("golden not found: %s", id)
 	}
 	if err != nil {
-		return nil, fmt.Errorf("failed to query acme: %w", err)
+		return nil, fmt.Errorf("failed to query golden: %w", err)
 	}
 
 	doc.Tags = []string(tags)
 	return &doc, nil
 }
 
-func (r *AcmeRepository) Create(ctx context.Context, doc *domainacmes.Acme) error {
+func (r *GoldenRepository) Create(ctx context.Context, doc *domaingoldens.Golden) error {
 	query := `
-		INSERT INTO acmes (id, title, description, category, tags, updated_at, content_b64, cover_image)
+		INSERT INTO goldens (id, title, description, category, tags, updated_at, content_b64, cover_image)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
 	`
 
@@ -183,15 +182,15 @@ func (r *AcmeRepository) Create(ctx context.Context, doc *domainacmes.Acme) erro
 	)
 
 	if err != nil {
-		return fmt.Errorf("failed to create acme: %w", err)
+		return fmt.Errorf("failed to create golden: %w", err)
 	}
 
 	return nil
 }
 
-func (r *AcmeRepository) Update(ctx context.Context, doc *domainacmes.Acme) error {
+func (r *GoldenRepository) Update(ctx context.Context, doc *domaingoldens.Golden) error {
 	query := `
-		UPDATE acmes
+		UPDATE goldens
 		SET title = $2, description = $3, category = $4, tags = $5, updated_at = $6, content_b64 = $7, cover_image = $8
 		WHERE id = $1
 	`
@@ -210,7 +209,7 @@ func (r *AcmeRepository) Update(ctx context.Context, doc *domainacmes.Acme) erro
 	)
 
 	if err != nil {
-		return fmt.Errorf("failed to update acme: %w", err)
+		return fmt.Errorf("failed to update golden: %w", err)
 	}
 
 	rowsAffected, err := result.RowsAffected()
@@ -219,18 +218,18 @@ func (r *AcmeRepository) Update(ctx context.Context, doc *domainacmes.Acme) erro
 	}
 
 	if rowsAffected == 0 {
-		return fmt.Errorf("acme not found: %s", doc.ID)
+		return fmt.Errorf("golden not found: %s", doc.ID)
 	}
 
 	return nil
 }
 
-func (r *AcmeRepository) Delete(ctx context.Context, id string) error {
-	query := `DELETE FROM acmes WHERE id = $1`
+func (r *GoldenRepository) Delete(ctx context.Context, id string) error {
+	query := `DELETE FROM goldens WHERE id = $1`
 
 	result, err := r.db.ExecContext(ctx, query, id)
 	if err != nil {
-		return fmt.Errorf("failed to delete acme: %w", err)
+		return fmt.Errorf("failed to delete golden: %w", err)
 	}
 
 	rowsAffected, err := result.RowsAffected()
@@ -239,7 +238,7 @@ func (r *AcmeRepository) Delete(ctx context.Context, id string) error {
 	}
 
 	if rowsAffected == 0 {
-		return fmt.Errorf("acme not found: %s", id)
+		return fmt.Errorf("golden not found: %s", id)
 	}
 
 	return nil

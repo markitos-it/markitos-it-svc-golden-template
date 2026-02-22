@@ -2,35 +2,35 @@ package services
 
 import (
 	"context"
-	"markitos-it-svc-acmes/internal/domain/domainacmes"
+	domaingoldens "markitos-it-svc-goldens/internal/domain/domainacmes"
 )
 
-type AcmeService struct {
-	repo domainacmes.Repository
+type GoldenService struct {
+	repo domaingoldens.Repository
 }
 
-func NewAcmeService(repo domainacmes.Repository) *AcmeService {
-	return &AcmeService{
+func NewGoldenService(repo domaingoldens.Repository) *GoldenService {
+	return &GoldenService{
 		repo: repo,
 	}
 }
 
-func (s *AcmeService) GetAllAcmes(ctx context.Context) ([]domainacmes.Acme, error) {
+func (s *GoldenService) GetAllGoldens(ctx context.Context) ([]domaingoldens.Golden, error) {
 	return s.repo.GetAll(ctx)
 }
 
-func (s *AcmeService) GetAcmeByID(ctx context.Context, id string) (*domainacmes.Acme, error) {
+func (s *GoldenService) GetGoldenByID(ctx context.Context, id string) (*domaingoldens.Golden, error) {
 	return s.repo.GetByID(ctx, id)
 }
 
-func (s *AcmeService) CreateAcme(ctx context.Context, doc *domainacmes.Acme) error {
+func (s *GoldenService) CreateGolden(ctx context.Context, doc *domaingoldens.Golden) error {
 	return s.repo.Create(ctx, doc)
 }
 
-func (s *AcmeService) UpdateAcme(ctx context.Context, doc *domainacmes.Acme) error {
+func (s *GoldenService) UpdateGolden(ctx context.Context, doc *domaingoldens.Golden) error {
 	return s.repo.Update(ctx, doc)
 }
 
-func (s *AcmeService) DeleteAcme(ctx context.Context, id string) error {
+func (s *GoldenService) DeleteGolden(ctx context.Context, id string) error {
 	return s.repo.Delete(ctx, id)
 }

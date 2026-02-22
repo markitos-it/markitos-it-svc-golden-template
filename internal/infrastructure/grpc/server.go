@@ -4,61 +4,61 @@ import (
 	"context"
 	"log"
 
-	"markitos-it-svc-acmes/internal/application/services"
-	"markitos-it-svc-acmes/internal/domain/domainacmes"
-	pb "markitos-it-svc-acmes/proto"
+	"markitos-it-svc-goldens/internal/application/services"
+	domaingoldens "markitos-it-svc-goldens/internal/domain/domainacmes"
+	pb "markitos-it-svc-goldens/proto"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-type AcmeServer struct {
-	pb.UnimplementedAcmeServiceServer
-	service *services.AcmeService
+type GoldenServer struct {
+	pb.UnimplementedGoldenServiceServer
+	service *services.GoldenService
 }
 
-func NewAcmeServer(service *services.AcmeService) *AcmeServer {
-	return &AcmeServer{
+func NewGoldenServer(service *services.GoldenService) *GoldenServer {
+	return &GoldenServer{
 		service: service,
 	}
 }
 
-func (s *AcmeServer) GetAllAcmes(ctx context.Context, req *pb.GetAllAcmesRequest) (*pb.GetAllAcmesResponse, error) {
-	log.Println("GetAllAcmes called")
+func (s *GoldenServer) GetAllGoldens(ctx context.Context, req *pb.GetAllGoldensRequest) (*pb.GetAllGoldensResponse, error) {
+	log.Println("GetAllGoldens called")
 
-	docs, err := s.service.GetAllAcmes(ctx)
+	docs, err := s.service.GetAllGoldens(ctx)
 	if err != nil {
-		log.Printf("Error getting all acmes: %v", err)
-		return nil, status.Errorf(codes.Internal, "failed to get acmes: %v", err)
+		log.Printf("Error getting all goldens: %v", err)
+		return nil, status.Errorf(codes.Internal, "failed to get goldens: %v", err)
 	}
 
-	pbDocs := make([]*pb.Acme, 0, len(docs))
+	pbDocs := make([]*pb.Golden, 0, len(docs))
 	for _, doc := range docs {
-		pbDocs = append(pbDocs, acmeToProto(&doc))
+		pbDocs = append(pbDocs, goldenToProto(&doc))
 	}
 
-	return &pb.GetAllAcmesResponse{
-		Acmes: pbDocs,
+	return &pb.GetAllGoldensResponse{
+		Goldens: pbDocs,
 	}, nil
 }
 
-func (s *AcmeServer) GetAcmeById(ctx context.Context, req *pb.GetAcmeByIdRequest) (*pb.GetAcmeByIdResponse, error) {
-	log.Printf("GetAcmeById called with id: %s", req.Id)
+func (s *GoldenServer) GetGoldenById(ctx context.Context, req *pb.GetGoldenByIdRequest) (*pb.GetGoldenByIdResponse, error) {
+	log.Printf("GetGoldenById called with id: %s", req.Id)
 
-	doc, err := s.service.GetAcmeByID(ctx, req.Id)
+	doc, err := s.service.GetGoldenByID(ctx, req.Id)
 	if err != nil {
-		log.Printf("Error getting acme by id %s: %v", req.Id, err)
-		return nil, status.Errorf(codes.NotFound, "acme not found: %v", err)
+		log.Printf("Error getting golden by id %s: %v", req.Id, err)
+		return nil, status.Errorf(codes.NotFound, "golden not found: %v", err)
 	}
 
-	return &pb.GetAcmeByIdResponse{
-		Acme: acmeToProto(doc),
+	return &pb.GetGoldenByIdResponse{
+		Golden: goldenToProto(doc),
 	}, nil
 }
 
-func acmeToProto(doc *domainacmes.Acme) *pb.Acme {
-	return &pb.Acme{
+func goldenToProto(doc *domaingoldens.Golden) *pb.Golden {
+	return &pb.Golden{
 		Id:          doc.ID,
 		Title:       doc.Title,
 		Description: doc.Description,

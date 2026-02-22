@@ -8,7 +8,7 @@ VERSION=$1
 
 if [ -z "$VERSION" ]; then
     echo "❌ Error: Version is required"
-    echo "Usage: make app-delete-tag n.n.n"
+    echo "Usage: make delete-tag n.n.n"
     exit 1
 fi
 

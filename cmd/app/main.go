@@ -5,15 +5,15 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"markitos-it-svc-goldens/internal/application/services"
+	"markitos-it-svc-goldens/internal/infrastructure/persistence/postgres"
 	"net"
 	"os"
 	"os/signal"
 	"syscall"
 
-	"markitos-it-svc-acmes/internal/application/services"
-	grpcserver "markitos-it-svc-acmes/internal/infrastructure/grpc"
-	"markitos-it-svc-acmes/internal/infrastructure/persistence/postgres"
-	pb "markitos-it-svc-acmes/proto"
+	grpcserver "markitos-it-svc-goldens/internal/infrastructure/grpc"
+	pb "markitos-it-svc-goldens/proto"
 
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
@@ -29,7 +29,7 @@ func getEnvRequired(key string) string {
 }
 
 func main() {
-	log.Println("🚀 Starting Acmes gRPC Service...")
+	log.Println("🚀 Starting Goldens gRPC Service...")
 	db, repo := loadDatabase()
 	defer db.Close()
 
@@ -41,7 +41,7 @@ func main() {
 	if err := repo.SeedData(ctx); err != nil {
 		log.Printf("⚠️  Failed to seed data: %v", err)
 	}
-	docService := services.NewAcmeService(repo)
+	docService := services.NewGoldenService(repo)
 
 	grpcPort := getEnvRequired("GRPC_PORT")
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", grpcPort))
@@ -50,7 +50,7 @@ func main() {
 	}
 
 	grpcServer := grpc.NewServer()
-	pb.RegisterAcmeServiceServer(grpcServer, grpcserver.NewAcmeServer(docService))
+	pb.RegisterGoldenServiceServer(grpcServer, grpcserver.NewGoldenServer(docService))
 	reflection.Register(grpcServer)
 
 	sigChan := make(chan os.Signal, 1)
@@ -69,7 +69,7 @@ func main() {
 	log.Println("👋 Service stopped")
 }
 
-func loadDatabase() (*sql.DB, *postgres.AcmeRepository) {
+func loadDatabase() (*sql.DB, *postgres.GoldenRepository) {
 	log.Println("🚀 loading database")
 	dbHost := getEnvRequired("DB_HOST")
 	dbPort := getEnvRequired("DB_PORT")
@@ -87,5 +87,5 @@ func loadDatabase() (*sql.DB, *postgres.AcmeRepository) {
 	}
 	log.Println("✅ Connected to PostgreSQL")
 
-	return db, postgres.NewAcmeRepository(db)
+	return db, postgres.NewGoldenRepository(db)
 }

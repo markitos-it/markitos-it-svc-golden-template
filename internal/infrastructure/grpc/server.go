@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"markitos-it-svc-acmes/internal/application/services"
-	"markitos-it-svc-acmes/internal/domain/acmes"
+	"markitos-it-svc-acmes/internal/domain/domainacmes"
 	pb "markitos-it-svc-acmes/proto"
 
 	"google.golang.org/grpc/codes"
@@ -57,7 +57,7 @@ func (s *AcmeServer) GetAcmeById(ctx context.Context, req *pb.GetAcmeByIdRequest
 	}, nil
 }
 
-func acmeToProto(doc *acmes.Acme) *pb.Acme {
+func acmeToProto(doc *domainacmes.Acme) *pb.Acme {
 	return &pb.Acme{
 		Id:          doc.ID,
 		Title:       doc.Title,

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"markitos-it-svc-acmes/internal/domain/acmes"
+	"markitos-it-svc-acmes/internal/domain/domainacmes"
 
 	"github.com/lib/pq"
 )
@@ -45,7 +45,6 @@ func (r *AcmeRepository) InitSchema(ctx context.Context) error {
 }
 
 func (r *AcmeRepository) SeedData(ctx context.Context) error {
-	// Check if data already exists
 	var count int
 	err := r.db.QueryRowContext(ctx, "SELECT COUNT(*) FROM acmes").Scan(&count)
 	if err != nil {
@@ -53,10 +52,10 @@ func (r *AcmeRepository) SeedData(ctx context.Context) error {
 	}
 
 	if count > 0 {
-		return nil // Data already seeded
+		return nil
 	}
 
-	docs := []acmes.Acme{
+	docs := []domainacmes.Acme{
 		{
 			ID:          "getting-started-keptn",
 			Title:       "Getting Started with Keptn",
@@ -89,7 +88,7 @@ func (r *AcmeRepository) SeedData(ctx context.Context) error {
 	return nil
 }
 
-func (r *AcmeRepository) GetAll(ctx context.Context) ([]acmes.Acme, error) {
+func (r *AcmeRepository) GetAll(ctx context.Context) ([]domainacmes.Acme, error) {
 	query := `
 		SELECT id, title, description, category, tags, updated_at, content_b64, cover_image
 		FROM acmes
@@ -102,9 +101,9 @@ func (r *AcmeRepository) GetAll(ctx context.Context) ([]acmes.Acme, error) {
 	}
 	defer rows.Close()
 
-	var docs []acmes.Acme
+	var docs []domainacmes.Acme
 	for rows.Next() {
-		var doc acmes.Acme
+		var doc domainacmes.Acme
 		var tags pq.StringArray
 
 		err := rows.Scan(
@@ -132,14 +131,14 @@ func (r *AcmeRepository) GetAll(ctx context.Context) ([]acmes.Acme, error) {
 	return docs, nil
 }
 
-func (r *AcmeRepository) GetByID(ctx context.Context, id string) (*acmes.Acme, error) {
+func (r *AcmeRepository) GetByID(ctx context.Context, id string) (*domainacmes.Acme, error) {
 	query := `
 		SELECT id, title, description, category, tags, updated_at, content_b64, cover_image
 		FROM acmes
 		WHERE id = $1
 	`
 
-	var doc acmes.Acme
+	var doc domainacmes.Acme
 	var tags pq.StringArray
 
 	err := r.db.QueryRowContext(ctx, query, id).Scan(
@@ -164,7 +163,7 @@ func (r *AcmeRepository) GetByID(ctx context.Context, id string) (*acmes.Acme, e
 	return &doc, nil
 }
 
-func (r *AcmeRepository) Create(ctx context.Context, doc *acmes.Acme) error {
+func (r *AcmeRepository) Create(ctx context.Context, doc *domainacmes.Acme) error {
 	query := `
 		INSERT INTO acmes (id, title, description, category, tags, updated_at, content_b64, cover_image)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -190,7 +189,7 @@ func (r *AcmeRepository) Create(ctx context.Context, doc *acmes.Acme) error {
 	return nil
 }
 
-func (r *AcmeRepository) Update(ctx context.Context, doc *acmes.Acme) error {
+func (r *AcmeRepository) Update(ctx context.Context, doc *domainacmes.Acme) error {
 	query := `
 		UPDATE acmes
 		SET title = $2, description = $3, category = $4, tags = $5, updated_at = $6, content_b64 = $7, cover_image = $8

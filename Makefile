@@ -1,40 +1,48 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help app-proto app-go-start app-purge app-deploy-tag app-delete-tag
+.PHONY: help proto start stop purge deploy-tag delete-tag
 
 help:
 	@echo "📋 Available commands (LOCAL DEVELOPMENT):"
 	@echo ""
 	@echo "  🚀 DESARROLLO:"
-	@echo "  make app-start               	- Start app with go run (inicia PostgreSQL)"
-	@echo "  make app-stop               	- Stop app with go run (para PostgreSQL)"
+	@echo "  make start               	- Start app with go run (inicia PostgreSQL)"
+	@echo "  make stop               	- Stop app with go run (para PostgreSQL)"
+	@echo "  make test <package>       	- Run tests for a specific package (e.g., make test ./internal/domain/...)"
+	@echo "  make build <package>      	- Build a specific package (e.g., make build ./cmd/...)"
 	@echo ""
 	@echo "  🛠️  UTILIDADES:"
-	@echo "  make app-proto            		- Generate protobuf code"
-	@echo "  make app-purge            		- Remove artifacts and stop PostgreSQL"
+	@echo "  make proto            		- Generate protobuf code"
+	@echo "  make purge            		- Remove artifacts and stop PostgreSQL"
 	@echo ""
 	@echo "  ☸️  KUBERNETES (deployment/):"
-	@echo "  make app-deploy-tag <version>  - Create and push git tag (e.g., 1.2.3)"
-	@echo "  make app-delete-tag <version>  - Delete git tag locally and remotely"
+	@echo "  make deploy-tag <version>  - Create and push git tag (e.g., 1.2.3)"
+	@echo "  make delete-tag <version>  - Delete git tag locally and remotely"
 	@echo ""
 
-app-proto:
+proto:
 	bash bin/app/proto.sh
 
-app-start:
+start:
 	bash bin/app/start.sh
 
-app-stop:
+stop:
 	bash bin/app/stop.sh
 
-app-purge:
+purge:
 	bash bin/app/purge.sh
 
-app-deploy-tag:
+deploy-tag:
 	bash bin/app/deploy-tag.sh $(filter-out $@,$(MAKECMDGOALS))
 
-app-delete-tag:
+delete-tag:
 	bash bin/app/delete-tag.sh $(filter-out $@,$(MAKECMDGOALS))
+
+test:
+	go test ./... $(filter-out $@,$(MAKECMDGOALS))
+
+build:
+	go build ./... $(filter-out $@,$(MAKECMDGOALS))
 
 %:
 	@:

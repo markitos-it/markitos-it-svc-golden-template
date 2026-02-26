@@ -13,10 +13,22 @@ spec:
       labels:
         app: markitos-it-svc-goldens-pods
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
       imagePullSecrets:
       - name: gcp-artifact-registry-secret
       containers:
       - name: markitos-it-svc-goldens-container
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          runAsUser: 1000
+          capabilities:
+            drop:
+            - ALL
         image: europe-southwest1-docker.pkg.dev/markitos-it-golden-images/private/markitos-it-svc-goldens:1.0.0
         ports:
         - containerPort: 3000
@@ -121,5 +133,6 @@ data:
   DB_HOST: "postgres"
   DB_PORT: "5432"
   DB_USER: "markitos-it-svc-goldens"
+  # checkov:skip=CKV_SECRET_6:Password for local dev only
   DB_PASS: "markitos-it-svc-goldens"
   DB_NAME: "markitos-it-svc-goldens"

@@ -41,8 +41,10 @@ repos:
     #:[.'.]:>- - stages: [commit] (solo en commit, no push)
     #:[.'.]:>- - exclude: "docs/.*" (ignora archivos en docs/)
     #:[.'.]:>- - args: ["--maxkb=1024"] (limita archivos a 1MB)
+    #:[.'.]:>- - args: ["--allow-multiple-documents"] (permite múltiples docs YAML separados por ---)
     hooks:
       - id: check-yaml
+        args: ["--allow-multiple-documents"]
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: check-added-large-files

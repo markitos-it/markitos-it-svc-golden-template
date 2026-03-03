@@ -1,4 +1,4 @@
-name: Publish Docker Image to GCP Artifact Registry
+name: publish
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_ID: ${{ vars.PROJECT_ID || 'markitos-it-golden-images' }}
+  PROJECT_ID: ${{ vars.PROJECT_ID || 'markitos-it-labs-course-basic' }}
   REGION: ${{ vars.REGION || 'europe-southwest1' }}
   REPOSITORY: ${{ vars.REPOSITORY || 'private' }}
   IMAGE_NAME: ${{ github.event.repository.name }}

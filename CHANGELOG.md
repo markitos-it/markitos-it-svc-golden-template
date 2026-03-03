@@ -1,3 +1,9 @@
+## v0.1.1 (2026-03-03)
+
+### 🔧 Chores
+
+- local working tree changes: .github/workflows/appsec.yaml.off, .github/workflows/appsec.yml, .github/workflows/publish-image.yaml ([`local`])
+
 ## v0.1.0 (2026-03-03)
 
 ### 📦 Other

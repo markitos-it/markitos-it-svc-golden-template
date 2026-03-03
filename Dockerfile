@@ -5,11 +5,10 @@ WORKDIR /build
 COPY go.* ./
 RUN go mod download
 RUN go mod tidy
-RUN make proto
 
 COPY . .
 
-RUN make proto && CGO_ENABLED=0 GOOS=linux go build -o app cmd/app/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o app cmd/app/main.go
 
 FROM alpine:latest
 

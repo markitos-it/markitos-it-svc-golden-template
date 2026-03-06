@@ -20,7 +20,7 @@ jobs:
     name: Secrets Scan
     runs-on: ubuntu-latest
     concurrency:
-      group: snyk-code-${{ github.ref }}
+      group: secrets-scan-${{ github.ref }}
       cancel-in-progress: true
     steps:
       - name: Checkout Code

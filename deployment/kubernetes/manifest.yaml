@@ -1,8 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: goldens
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: markitos-it-svc-goldens-deployment
-  namespace: default
+  namespace: goldens
 spec:
   replicas: 1
   selector:
@@ -86,7 +91,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: markitos-it-svc-goldens-service
-  namespace: default
+  namespace: goldens
 spec:
   type: ClusterIP
   selector:
@@ -101,7 +106,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: markitos-it-svc-goldens-hpa
-  namespace: default
+  namespace: goldens
 spec:
   minReplicas: 1
   maxReplicas: 3
@@ -127,7 +132,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: goldens-config
-  namespace: default
+  namespace: goldens
 data:
   GRPC_PORT: "3000"
   DB_HOST: "postgres"

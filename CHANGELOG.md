@@ -1,3 +1,9 @@
+## v0.2.3 (2026-03-06)
+
+### 🐛 Bug Fixes
+
+- (release) release v0.2.2: update .github/workflows/secured-publish.yaml and deployment/kubernetes/manifest.yaml ([`6796c21`])
+
 ## v0.2.2 (2026-03-06)
 
 ### 🔧 Chores

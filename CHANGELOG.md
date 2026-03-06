@@ -1,102 +1,28 @@
-## v0.4.1 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: .github/workflows/secured-publish.yaml, bin/app/proto.sh ([`local`])
-
-## v0.4.0 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: .github/workflows/secured-publish.yaml, cmd/app/main.go, docker-compose.yml ([`local`])
-
-## v0.3.5 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: go.mod ([`local`])
-
-## v0.3.4 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: .github/workflows/secured-publish.yaml, CHANGELOG.md ([`local`])
-
-## v0.3.4 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: .github/workflows/secured-publish.yaml ([`local`])
-
-## v0.3.3 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: .github/workflows/secured-publish.yaml ([`local`])
-
-## v0.3.2 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: .github/workflows/secured-publish.yaml ([`local`])
-
-## v0.3.1 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: .github/workflows/secured-publish.yaml ([`local`])
-
-## v0.3.0 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: .github/workflows/secured-publish.yaml, deployment/kubernetes/manifest.yaml, deployment/kubernetes/postgres.yaml ([`local`])
-
-## v0.2.4 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: Dockerfile, deployment/kubernetes/manifest.yaml, deployment/kubernetes/postgres.yaml ([`local`])
-
-## v0.2.3 (2026-03-06)
-
-### 🐛 Bug Fixes
-
-- (release) release v0.2.2: update .github/workflows/secured-publish.yaml and deployment/kubernetes/manifest.yaml ([`6796c21`])
-
-## v0.2.2 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: .github/workflows/secured-publish.yaml, deployment/kubernetes/manifest.yaml ([`local`])
-
-## v0.2.2 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: deployment/kubernetes/manifest.yaml ([`local`])
-
-## v0.2.1 (2026-03-06)
-
-### 🔧 Chores
-
-- local working tree changes: cmd/app/main.go, deployment/kubernetes/postgres.yaml ([`local`])
-
-## v0.2.0 (2026-03-06)
-
-### ✨ Features
-
-- (workflows) remove deprecated appsec and publish-image workflows; add secured-publish workflow for enhanced security ([`78305d2`])
-
 ## v0.1.0 (2026-03-06)
 
 ### ✨ Features
 
+- (release) release v0.4.0: update .github/workflows/secured-publish.yaml, cmd/app/main.go and 1 more files ([`ded777a`])
+- (release) snyk to appsec replace checkov and semgrep ([`9aef459`])
+- (release) release v0.2.0: remove deprecated appsec and publish-image workflows; added secured pipeline to publish only ([`39b4dfb`])
+- (workflows) remove deprecated appsec and publish-image workflows; add secured-publish workflow for enhanced security ([`78305d2`])
+- (release) release v0.1.0: reset versioning; remove redundant make proto command from build process; markitos-it/markitos-it-svc-golden; +24 more changes ([`438b19d`])
 - (release) release v0.1.0: remove redundant make proto command from build process; markitos-it/markitos-it-svc-golden; update build process to include go mod tidy and make proto; +16 more changes ([`9a2a599`])
 - (release) release v0.1.0: Add workflow for publishing Docker image to GCP Artifact…; Enhance security context for deployments and secrets in K…; Enhance Gitleaks detection verbosity in appsec.yml; +10 more changes ([`dd76ce9`])
 
 ### 🐛 Bug Fixes
 
+- (release) release v0.4.1: update .github/workflows/secured-publish.yaml and bin/app/proto.sh ([`6f73eed`])
+- (release) release v0.3.5: update go.mod ([`da28a1f`])
+- (release) appsec tuning ([`555a83d`])
+- (release) release v0.3.3: update .github/workflows/secured-publish.yaml ([`bb6626d`])
+- (release) release v0.3.2: update .github/workflows/secured-publish.yaml ([`2bcccff`])
+- (release) release v0.3.1: update .github/workflows/secured-publish.yaml ([`04124e6`])
+- (release) appsec fixing ([`26626da`])
+- (release) appsec fixing. release v0.2.3 ([`5eb0d5c`])
+- (release) release v0.2.2: update .github/workflows/secured-publish.yaml and deployment/kubernetes/manifest.yaml ([`6796c21`])
+- (release) release v0.2.2: update deployment/kubernetes/manifest.yaml ([`3d6c628`])
+- (release) release v0.2.1: appsec-fixupdate cmd/app/main.go and deployment/kubernetes/postgres.yaml ([`da5c7db`])
 - (release) release v0.1.6: update Dockerfile ([`9a73e70`])
 - (release) release v0.1.5: update bin/app/proto.sh ([`d4271a0`])
 - (release) release v0.1.4: update Dockerfile ([`bec6007`])

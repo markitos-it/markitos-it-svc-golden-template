@@ -133,6 +133,5 @@ data:
   DB_HOST: "postgres"
   DB_PORT: "5432"
   DB_USER: "markitos-it-svc-goldens"
-  # checkov:skip=CKV_SECRET_6:Password for local dev only
-  DB_PASS: "markitos-it-svc-goldens"
+  DB_PASS: "markitos-it-svc-goldens" # gitleaks:allow (local dev password)
   DB_NAME: "markitos-it-svc-goldens"

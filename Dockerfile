@@ -1,5 +1,4 @@
 FROM golang:1.25-alpine AS builder
-
 WORKDIR /build
 
 ENV CGO_ENABLED=0
@@ -17,6 +16,7 @@ RUN go mod download
 COPY . .
 
 RUN make proto
+RUN ls -la proto
 
 RUN go build -o app ./cmd/app
 

@@ -1,30 +1,19 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env sh
+set -eu
 
-echo "🔍 Checking for protoc compiler..."
-if ! command -v protoc &> /dev/null; then
-    echo "📦 Installing protoc..."
-    sudo apt update && sudo apt install -y protobuf-compiler && protoc --version
-fi
+echo "== protoc version =="
+protoc --version
 
-echo "🔍 Checking for protoc-gen-go plugin..."
-if ! command -v protoc-gen-go &> /dev/null; then
-    echo "📦 Installing protoc-gen-go..."
-    go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-fi
+echo "== protoc-gen-go =="
+command -v protoc-gen-go >/dev/null 2>&1
 
-echo "🔍 Checking for protoc-gen-go-grpc plugin..."
-if ! command -v protoc-gen-go-grpc &> /dev/null; then
-    echo "📦 Installing protoc-gen-go-grpc..."
-    go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-fi
-echo "✅ Protoc plugins are installed"
+echo "== protoc-gen-go-grpc =="
+command -v protoc-gen-go-grpc >/dev/null 2>&1
 
-
-
-
-echo "🔄 Running protoc to generate Go code from proto files..."
+echo "== generating protobuf go files =="
 protoc --go_out=. --go_opt=paths=source_relative \
-    --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-    proto/golden.proto
-echo "✅ Protobuf code generated"
+  --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+  proto/golden.proto
+
+echo "== done =="
+ls -la proto

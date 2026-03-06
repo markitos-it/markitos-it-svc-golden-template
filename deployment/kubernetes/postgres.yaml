@@ -16,7 +16,7 @@ metadata:
   namespace: goldens
 type: Opaque
 data:
-  DB_PASS: "cG9zdGdyZXMxMjM=" # gitleaks:allow (demo secret in base64)
+  DB_PASS: "bWFya2l0b3MtaXQtc3ZjLWdvbGRlbnMK" # gitleaks:allow (demo secret in base64)
 
 ---
 apiVersion: apps/v1

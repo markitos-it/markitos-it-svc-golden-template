@@ -20,13 +20,17 @@ jobs:
     name: Secrets Scan
     runs-on: ubuntu-latest
     concurrency:
-      group: appsec-${{ github.ref }}
+      group: snyk-code-${{ github.ref }}
       cancel-in-progress: true
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          fetch-depth: 0
+          go-version-file: go.mod
+          cache: true
       - name: Gitleaks Scan
         run: |
           docker run --rm \

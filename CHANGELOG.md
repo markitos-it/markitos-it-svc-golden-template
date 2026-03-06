@@ -1,3 +1,9 @@
+## v0.1.5 (2026-03-06)
+
+### 🔧 Chores
+
+- local working tree changes: bin/app/proto.sh ([`local`])
+
 ## v0.1.4 (2026-03-06)
 
 ### 🔧 Chores

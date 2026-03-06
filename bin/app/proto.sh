@@ -1,19 +1,18 @@
-#!/usr/bin/env sh
-set -eu
+#!/bin/bash
+set -e
 
 echo "== protoc version =="
 protoc --version
 
-echo "== protoc-gen-go =="
-command -v protoc-gen-go >/dev/null 2>&1
-
-echo "== protoc-gen-go-grpc =="
-command -v protoc-gen-go-grpc >/dev/null 2>&1
+echo "== include dirs check =="
+ls -la /usr/include/google/protobuf/timestamp.proto || true
+ls -la /usr/local/include/google/protobuf/timestamp.proto || true
 
 echo "== generating protobuf go files =="
-protoc --go_out=. --go_opt=paths=source_relative \
+protoc -I. -I/usr/include -I/usr/local/include \
+  --go_out=. --go_opt=paths=source_relative \
   --go-grpc_out=. --go-grpc_opt=paths=source_relative \
   proto/golden.proto
 
-echo "== done =="
+echo "== generated files =="
 ls -la proto

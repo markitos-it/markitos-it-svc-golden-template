@@ -1,3 +1,9 @@
+## v0.2.1 (2026-03-06)
+
+### 🔧 Chores
+
+- local working tree changes: cmd/app/main.go, deployment/kubernetes/postgres.yaml ([`local`])
+
 ## v0.2.0 (2026-03-06)
 
 ### ✨ Features

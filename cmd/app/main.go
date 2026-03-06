@@ -17,6 +17,7 @@ import (
 
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/reflection"
 )
 
@@ -49,7 +50,12 @@ func main() {
 		log.Fatalf("❌ Failed to listen: %v", err)
 	}
 
-	grpcServer := grpc.NewServer()
+	creds, err := credentials.NewServerTLSFromFile("certs/server.crt", "certs/server.key")
+	if err != nil {
+		log.Fatalf("tls error: %v", err)
+	}
+	grpcServer := grpc.NewServer(grpc.Creds(creds))
+
 	pb.RegisterGoldenServiceServer(grpcServer, grpcserver.NewGoldenServer(docService))
 	reflection.Register(grpcServer)
 

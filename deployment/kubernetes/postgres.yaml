@@ -16,7 +16,7 @@ metadata:
   namespace: default
 type: Opaque
 data:
-  DB_PASS: "cG9zdGdyZXMxMjM="
+  DB_PASS: "cG9zdGdyZXMxMjM=" # gitleaks:allow (demo secret in base64)
 
 ---
 apiVersion: apps/v1

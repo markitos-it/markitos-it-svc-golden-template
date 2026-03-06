@@ -1,6 +1,6 @@
 module markitos-it-svc-goldens
 
-go 1.25.0
+go 1.25
 
 require (
 	github.com/lib/pq v1.11.2

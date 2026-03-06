@@ -95,9 +95,7 @@ func TestGoldenRepository_InitSchema(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := &GoldenRepository{
-				db: tt.fields.db,
-			}
+			r := &GoldenRepository{db: tt.fields.db}
 			if err := r.InitSchema(tt.args.ctx); (err != nil) != tt.wantErr {
 				t.Errorf("GoldenRepository.InitSchema() error = %v, wantErr %v", err, tt.wantErr)
 			}
@@ -130,9 +128,7 @@ func TestGoldenRepository_SeedData(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := &GoldenRepository{
-				db: tt.fields.db,
-			}
+			r := &GoldenRepository{db: tt.fields.db}
 			if err := r.SeedData(tt.args.ctx); (err != nil) != tt.wantErr {
 				t.Errorf("GoldenRepository.SeedData() error = %v, wantErr %v", err, tt.wantErr)
 			}
@@ -167,9 +163,7 @@ func TestGoldenRepository_GetAll(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := &GoldenRepository{
-				db: tt.fields.db,
-			}
+			r := &GoldenRepository{db: tt.fields.db}
 			got, err := r.GetAll(tt.args.ctx)
 			if (err != nil) != tt.wantErr {
 				t.Fatalf("GoldenRepository.GetAll() error = %v, wantErr %v", err, tt.wantErr)
@@ -212,9 +206,7 @@ func TestGoldenRepository_GetByID(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := &GoldenRepository{
-				db: tt.fields.db,
-			}
+			r := &GoldenRepository{db: tt.fields.db}
 			got, err := r.GetByID(tt.args.ctx, tt.args.id)
 			if (err != nil) != tt.wantErr {
 				t.Fatalf("GoldenRepository.GetByID() error = %v, wantErr %v", err, tt.wantErr)
@@ -256,9 +248,7 @@ func TestGoldenRepository_Create(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := &GoldenRepository{
-				db: tt.fields.db,
-			}
+			r := &GoldenRepository{db: tt.fields.db}
 			if err := r.Create(tt.args.ctx, tt.args.doc); (err != nil) != tt.wantErr {
 				t.Errorf("GoldenRepository.Create() error = %v, wantErr %v", err, tt.wantErr)
 			}
@@ -293,9 +283,7 @@ func TestGoldenRepository_Update(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := &GoldenRepository{
-				db: tt.fields.db,
-			}
+			r := &GoldenRepository{db: tt.fields.db}
 			if err := r.Update(tt.args.ctx, tt.args.doc); (err != nil) != tt.wantErr {
 				t.Errorf("GoldenRepository.Update() error = %v, wantErr %v", err, tt.wantErr)
 			}
@@ -329,9 +317,7 @@ func TestGoldenRepository_Delete(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := &GoldenRepository{
-				db: tt.fields.db,
-			}
+			r := &GoldenRepository{db: tt.fields.db}
 			if err := r.Delete(tt.args.ctx, tt.args.id); (err != nil) != tt.wantErr {
 				t.Errorf("GoldenRepository.Delete() error = %v, wantErr %v", err, tt.wantErr)
 			}

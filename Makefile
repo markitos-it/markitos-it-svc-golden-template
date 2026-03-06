@@ -43,14 +43,13 @@ clone:
 	bash bin/app/clone.sh
 
 test:
-	go test -cover -count=1 ./...
+	bash bin/app/test.sh $(filter-out $@,$(MAKECMDGOALS))
 
 test-v:
-	go test -cover -count=1 ./... -v
+	bash bin/app/test-v.sh -v $(filter-out $@,$(MAKECMDGOALS))
 
 cover:
-	go test -count=1 ./... -coverprofile=coverage.out
-	go tool cover -html=coverage.out && rm coverage.out
+	bash bin/app/cover.sh $(filter-out $@,$(MAKECMDGOALS))
 
 build:
 	go build ./... $(filter-out $@,$(MAKECMDGOALS))

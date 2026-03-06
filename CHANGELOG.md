@@ -1,3 +1,10 @@
+## v0.2.0 (2026-03-06)
+
+### ♻️  Refactor
+
+- (release) using version semver at deploy ([`773f7e8`])
+- (release) release v0.1.0: update .github/workflows/appsec.yaml.off and .github/workflows/publish-image.yaml.off ([`2dfff46`])
+
 ## v0.1.0 (2026-03-06)
 
 ### ♻️  Refactor

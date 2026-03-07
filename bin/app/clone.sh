@@ -1,4 +1,12 @@
 #!/bin/bash
+#:[.'.']:>- ===================================================================================
+#:[.'.']:>- Marco Antonio - markitos devsecops kulture
+#:[.'.']:>- The Way of the Artisan
+#:[.'.']:>- markitos.es.info@gmail.com
+#:[.'.']:>- 🌍 https://github.com/orgs/markitos-it/repositories
+#:[.'.']:>- 🌍 https://github.com/orgs/markitos-public/repositories
+#:[.'.']:>- 📺 https://www.youtube.com/@markitos_devsecops
+#:[.'.']:>- ===================================================================================
 set -euo pipefail
 
 cd "$(dirname "$0")/../.."

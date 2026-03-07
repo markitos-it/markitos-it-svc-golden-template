@@ -1,20 +1,22 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help proto start stop purge deploy-tag delete-tag clone
+.PHONY: help proto start stop purge deploy-tag delete-tag clone test test-v cover build destroy
 
 help:
 	@echo "📋 Available commands (LOCAL DEVELOPMENT):"
 	@echo ""
 	@echo "  🚀 DESARROLLO:"
-	@echo "  make start               	- Start app with go run (inicia PostgreSQL)"
-	@echo "  make stop               	- Stop app with go run (para PostgreSQL)"
-	@echo "  make test <package>       	- Run tests for a specific package (e.g., make test ./internal/domain/...)"
-	@echo "  make build <package>      	- Build a specific package (e.g., make build ./cmd/...)"
+	@echo "  make start                 - Start app with go run (inicia PostgreSQL)"
+	@echo "  make stop                  - Stop app with go run (para PostgreSQL)"
+	@echo "  make test <package>        - Run tests for a specific package"
+	@echo "  make test-v <package>      - Run tests with verbose output"
+	@echo "  make cover <package>       - Run tests with coverage report"
+	@echo "  make build <package>       - Build a specific package"
 	@echo ""
 	@echo "  🛠️  UTILIDADES:"
-	@echo "  make proto            		- Generate protobuf code"
-	@echo "  make clone            		- Clone service template replacing golden/goldens"
-	@echo "  make destroy          		- Remove artifacts and stop PostgreSQL"
+	@echo "  make proto                 - Generate protobuf code"
+	@echo "  make clone                 - Clone service template replacing golden/goldens"
+	@echo "  make destroy               - Remove artifacts and stop PostgreSQL"
 	@echo ""
 	@echo "  ☸️  KUBERNETES (deployment/):"
 	@echo "  make deploy-tag <version>  - Create and push git tag (e.g., 1.2.3)"

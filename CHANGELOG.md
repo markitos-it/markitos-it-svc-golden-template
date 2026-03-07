@@ -1,5 +1,11 @@
 ## v0.4.0 (2026-03-07)
 
+### 🔧 Chores
+
+- local working tree changes: Makefile, README.es.md, README.md ([`local`])
+
+## v0.4.0 (2026-03-07)
+
 ### ✨ Features
 
 - (tests) refactor test scripts to use shared setup and improve database handling ([`fabe56e`])
